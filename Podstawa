@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
+
+int main()
+{
+	int n;
+
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		char liczba1[10], liczba2[10], liczba3[10], sprGwiazdka = '0';
+		int  gwiazdka = -1, kolumnaGwiazdki = 0, wierszGwiazdki = 0;
+		bool nieZnalezionoGwiazdki = true;
+
+		cin >> liczba1 >> liczba2 >> liczba3;
+		while (nieZnalezionoGwiazdki)
+		{
+			if ((liczba1[kolumnaGwiazdki] >= '0' && liczba1[kolumnaGwiazdki] <= '9') &&
+				(liczba2[kolumnaGwiazdki] >= '0' && liczba2[kolumnaGwiazdki] <= '9') &&
+				(liczba3[kolumnaGwiazdki] >= '0' && liczba3[kolumnaGwiazdki] <= '9'))
+				kolumnaGwiazdki++;
+			else if (liczba1[kolumnaGwiazdki] == '*')
+			{
+				wierszGwiazdki = 1;
+				nieZnalezionoGwiazdki = false;
+			}
+			else if (liczba2[kolumnaGwiazdki] == '*')
+			{
+				wierszGwiazdki = 2;
+				nieZnalezionoGwiazdki = false;
+			}
+			else if (liczba3[kolumnaGwiazdki] == '*')
+			{
+				wierszGwiazdki = 3;
+				nieZnalezionoGwiazdki = false;
+			}
+			else
+				nieZnalezionoGwiazdki = false;
+		}
+		switch (wierszGwiazdki)
+		{
+		case 1:
+			while (gwiazdka == -1)
+			{
+				liczba1[kolumnaGwiazdki] = sprGwiazdka;
+				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+					gwiazdka = sprGwiazdka - '0';
+				sprGwiazdka++;
+			}
+			break;
+		case 2:
+			while (gwiazdka == -1)
+			{
+				liczba2[kolumnaGwiazdki] = sprGwiazdka;
+				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+					gwiazdka = sprGwiazdka - '0';
+				sprGwiazdka++;
+			}	break;
+		case 3:
+			while (gwiazdka == -1)
+			{
+				liczba3[kolumnaGwiazdki] = sprGwiazdka;
+				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+					gwiazdka = sprGwiazdka - '0';
+				sprGwiazdka++;
+			}
+			break;
+		}
+		cout << gwiazdka;
+	}
+	return 0;
+}
