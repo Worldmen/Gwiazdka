@@ -1,0 +1,95 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+
+int main()
+{
+	vector <string> liczba1;
+	vector <string> liczba2;
+	vector <string> liczba3;
+	string bufor;
+	int n, m = 0;
+
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> bufor;
+		liczba1.push_back(bufor);
+		cin >> bufor;
+		liczba2.push_back(bufor);
+		cin >> bufor;
+		liczba3.push_back(bufor);
+	}
+
+	for (auto i = 0; i < n; i++) {
+		bufor = liczba1[i];
+		cout << bufor;
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		char sprGwiazdka = '0';
+		int  gwiazdka = -1, kolumnaGwiazdki = 0, wierszGwiazdki = 0;
+		bool nieZnalezionoGwiazdki = true;
+
+		while (nieZnalezionoGwiazdki)
+		{
+			if ((liczba1[kolumnaGwiazdki][m] >= '0' && liczba1[kolumnaGwiazdki][m] <= '9') &&
+				(liczba2[kolumnaGwiazdki][m] >= '0' && liczba2[kolumnaGwiazdki][m] <= '9') &&
+				(liczba3[kolumnaGwiazdki][m] >= '0' && liczba3[kolumnaGwiazdki][m] <= '9'))
+				kolumnaGwiazdki++;
+			else if (liczba1[kolumnaGwiazdki][m] == '*')
+			{
+				wierszGwiazdki = 1;
+				nieZnalezionoGwiazdki = false;
+			}
+			else if (liczba2[kolumnaGwiazdki][m] == '*')
+			{
+				wierszGwiazdki = 2;
+				nieZnalezionoGwiazdki = false;
+			}
+			else if (liczba3[kolumnaGwiazdki][m] == '*')
+			{
+				wierszGwiazdki = 3;
+				nieZnalezionoGwiazdki = false;
+			}
+			else
+				nieZnalezionoGwiazdki = false;
+		}
+		/*switch (wierszGwiazdki)
+		{
+		case 1:
+			while (gwiazdka == -1)
+			{
+				liczba1[kolumnaGwiazdki][m] = sprGwiazdka;
+				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+					gwiazdka = sprGwiazdka - '0';
+				sprGwiazdka++;
+			}
+			break;
+		case 2:
+			while (gwiazdka == -1)
+			{
+				liczba2[kolumnaGwiazdki][m] = sprGwiazdka;
+				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+					gwiazdka = sprGwiazdka - '0';
+				sprGwiazdka++;
+			}	break;
+		case 3:
+			while (gwiazdka == -1)
+			{
+				liczba3[kolumnaGwiazdki][m] = sprGwiazdka;
+				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+					gwiazdka = sprGwiazdka - '0';
+				sprGwiazdka++;
+			}
+			break;
+		}*/
+		cout << gwiazdka;
+		m++;
+	}
+	return 0;
+}
