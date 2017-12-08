@@ -93,3 +93,26 @@ int main()
 	}
 	return 0;
 }
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int a[255];
+
+int main()
+{
+    int n;
+    cin >> n;
+    for(int i=0;i<n;i++)
+    {
+        string txt;
+        getline(cin,txt);
+        for(int j=0;j<txt.size();j++)
+        {
+            a[txt[j]]++;
+        }
+    }
+
+    return 0;
+}
