@@ -1,43 +1,57 @@
 #include <iostream>
 #include <cstdlib>
+#include <string>
 
 using namespace std;
 
 int main()
 {
 	int n;
-
 	cin >> n;
 	for (int i = 0; i < n; i++)
 	{
-		char liczba1[10], liczba2[10], liczba3[10], sprGwiazdka = '0';
+		string liczba1, liczba2, liczba3;
+		char sprGwiazdka = '0';
 		int  gwiazdka = -1, kolumnaGwiazdki = 0, wierszGwiazdki = 0;
 		bool nieZnalezionoGwiazdki = true;
 
 		cin >> liczba1 >> liczba2 >> liczba3;
 		while (nieZnalezionoGwiazdki)
 		{
-			if ((liczba1[kolumnaGwiazdki] >= '0' && liczba1[kolumnaGwiazdki] <= '9') &&
-				(liczba2[kolumnaGwiazdki] >= '0' && liczba2[kolumnaGwiazdki] <= '9') &&
-				(liczba3[kolumnaGwiazdki] >= '0' && liczba3[kolumnaGwiazdki] <= '9'))
-				kolumnaGwiazdki++;
-			else if (liczba1[kolumnaGwiazdki] == '*')
+			for (int j = 0; j < liczba1.size(); j++)
 			{
-				wierszGwiazdki = 1;
-				nieZnalezionoGwiazdki = false;
+				if (liczba1[j] == '*')
+				{
+					kolumnaGwiazdki = j;
+					wierszGwiazdki = 1;
+					nieZnalezionoGwiazdki = false;
+					break;
+				}
 			}
-			else if (liczba2[kolumnaGwiazdki] == '*')
+			if (!nieZnalezionoGwiazdki)
+				break;
+			for (int j = 0; j < liczba2.size(); j++)
 			{
-				wierszGwiazdki = 2;
-				nieZnalezionoGwiazdki = false;
+				if (liczba2[j] == '*')
+				{
+					kolumnaGwiazdki = j;
+					wierszGwiazdki = 2;
+					nieZnalezionoGwiazdki = false;
+					break;
+				}
 			}
-			else if (liczba3[kolumnaGwiazdki] == '*')
+			if (!nieZnalezionoGwiazdki)
+				break;
+			for (int j = 0; j < liczba3.size(); j++)
 			{
-				wierszGwiazdki = 3;
-				nieZnalezionoGwiazdki = false;
+				if (liczba3[j] == '*')
+				{
+					kolumnaGwiazdki = j;
+					wierszGwiazdki = 3;
+					nieZnalezionoGwiazdki = false;
+					break;
+				}
 			}
-			else
-				nieZnalezionoGwiazdki = false;
 		}
 		switch (wierszGwiazdki)
 		{
@@ -45,7 +59,7 @@ int main()
 			while (gwiazdka == -1)
 			{
 				liczba1[kolumnaGwiazdki] = sprGwiazdka;
-				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+				if (atof(liczba1.c_str()) + atof(liczba2.c_str()) == atof(liczba3.c_str()))
 					gwiazdka = sprGwiazdka - '0';
 				sprGwiazdka++;
 			}
@@ -54,7 +68,7 @@ int main()
 			while (gwiazdka == -1)
 			{
 				liczba2[kolumnaGwiazdki] = sprGwiazdka;
-				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+				if (atof(liczba1.c_str()) + atof(liczba2.c_str()) == atof(liczba3.c_str()))
 					gwiazdka = sprGwiazdka - '0';
 				sprGwiazdka++;
 			}	break;
@@ -62,13 +76,13 @@ int main()
 			while (gwiazdka == -1)
 			{
 				liczba3[kolumnaGwiazdki] = sprGwiazdka;
-				if (atoi(liczba1) + atoi(liczba2) == atoi(liczba3))
+				if (atof(liczba1.c_str()) + atof(liczba2.c_str()) == atof(liczba3.c_str()))
 					gwiazdka = sprGwiazdka - '0';
 				sprGwiazdka++;
 			}
 			break;
 		}
-		cout << gwiazdka;
+		cout << gwiazdka << endl;
 	}
 	return 0;
 }
