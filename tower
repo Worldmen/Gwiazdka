@@ -33,9 +33,7 @@ int main()
 		for (int j = 0; j < a; j++)
 		{
 			if (word[j] <= word[j + 1])
-			{
 				(towers[i]).blocks++;
-			}
 			else
 			{
 				(towers[i]).last = word[j];
@@ -45,10 +43,29 @@ int main()
 	}
 	sort(towers,towers+ile,towerCompare);
 	tower monster;
-	for (int i = 0; i < ile; i++)
+	int przedzial=0;
+	for (int i = 0;i < ile; i++)
 	{
 		monster = (towers[i]);
-		
+		przedzial = 0;
+		if(i<ile)
+			for (int j = 0; j < ile; j++)
+			{
+				if (i == j)continue;
+				if (monster.last > (towers[j]).first)
+					break;
+				else
+					przedzial++;
+			}
+		else
+			for (int j = ile - 1; j >= 0; j--)
+			{
+				if (i == j)continue;
+				if (monster.last > (towers[j]).first)
+					break;
+				else
+					przedzial++;
+			}
 		for (int j = 0; j < ile; j++)
 		{
 			if (i == j)continue;
