@@ -1,0 +1,143 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int cats, road, addRoad, graph = 1, a, b;
+	cin >> cats >> road >> addRoad;
+	
+	if (cats == 1)
+	{
+		cout << 0;
+		return 0;
+	}
+	if (road == 0)
+	{
+		cout << 0;
+		return 0;
+	}
+	if (road == 1)
+	{
+		cout << 1;
+		return 1;
+	}
+	int **links = new int*[road];
+	for (int i = 0; i < road; i++)
+		links[i] = new int[cats];
+
+	cin >> links[0][0] >> links[0][1];
+
+	int *count = new int[road];
+	for (int i = 0; i < road; i++)
+		count[i] = 0;
+	count[0] = 2;
+	
+
+	int aPlace, bPlace;
+	bool found = false;
+	bool aFound, bFound;
+	for (int i = 1; i < road; i++)
+	{
+		cin >> a >> b;
+		aFound = false;
+		bFound = false;
+		aPlace = -1;
+		bPlace = -2;
+		for (int j = 0; j < graph; j++)
+		{
+			for (int k = 0; k < count[j]; k++)
+			{
+				if (a == links[j][k])
+					aFound = true;
+				else if (b == links[j][k])
+					bFound = true;
+			}
+			if (aFound)
+				aPlace = j;
+			if (bFound)
+				bPlace = j;
+			if (aFound&&bFound)
+				break;
+		}
+		if (aFound || bFound)
+		{
+			if (aPlace == bPlace)
+			{
+				continue;
+			}
+			if (aPlace == -1)
+			{
+				links[bPlace][count[bPlace]] = a;
+				count[bPlace]++;
+				continue;
+			}
+			else if (bPlace == -2)
+			{
+				links[aPlace][count[aPlace]] = b;
+				count[aPlace]++;
+				continue;
+			}
+			if (aPlace > bPlace)
+			{
+				int pom = count[aPlace] + count[bPlace];
+				for (int j = count[aPlace]; j < pom; j++)
+					links[aPlace][j] = links[bPlace][j - count[aPlace]];
+				count[aPlace] += count[bPlace];
+				bPlace++;
+				for (int j = bPlace; j < graph; j++)
+				{
+					count[j - 1] = count[j];
+					links[j - 1] = links[j];
+				}
+				graph--;
+			}
+			else if (aPlace < bPlace)
+			{
+				int pom = count[bPlace] + count[aPlace];
+				for (int j = count[bPlace]; j < pom; j++)
+					links[bPlace][j] = links[aPlace][j - count[aPlace]];
+				count[bPlace] += count[aPlace];
+				aPlace++;
+				for (int j = aPlace; j < graph; j++)
+				{
+					count[j - 1] = count[j];
+					links[j - 1] = links[j];
+				}
+				graph--;
+			}
+		}
+		else
+		{
+			links[graph][0] = a;
+			links[graph][1] = b;
+			count[graph] = 2;
+			graph++;
+		}
+	}
+	sort(count, count + graph);
+	double sum=count[0];
+	if (graph > addRoad)
+	{
+		for (int i = 0; i < addRoad; i++)
+		{
+			sum += count[i];
+		}
+		sum = (sum*sum - sum) / 2;
+		for (int i = addRoad; i < graph; i++)
+		{
+			sum += (count[i] * count[i] - count[i]) / 2;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < graph; i++)
+			sum += count[i];
+		sum = (sum*sum - sum) / 2;
+	}
+	cout << sum;
+
+	delete[] links;
+	delete[] count;
+	return 0;
+}
